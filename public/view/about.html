@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <script >
+    if(window.location.href != 'http://localhost:3000/about'){
+      setTimeout(() => { window.location.href = 'http://localhost:3000/about'} , 500)
+    } 
+  </script>
+  
+  <!-- SEO Meta -->
+  <title>À propos - AYIKPE IMMOBILIER | Location d'appartements meublés à Cotonou</title>
+  <meta name="description" content="Découvrez l'histoire, les valeurs et l'équipe d'AYIKPE IMMOBILIER, votre spécialiste en location d'appartements meublés à Cotonou.">
+  <meta name="keywords" content="à propos, AYIKPE IMMOBILIER, agence immobilière Cotonou, location meublée, équipe">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="À propos - AYIKPE IMMOBILIER">
+  <meta property="og:description" content="Découvrez notre agence et nos valeurs.">
+  <meta property="og:type" content="website">
+  
+  <!-- Schema.org Organization -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "AYIKPE IMMOBILIER",
+      "url": "https://www.ayikpeimmobilier.com",
+      "logo": "https://www.ayikpeimmobilier.com/logo.png",
+      "description": "Location d'appartements meublés à Cotonou",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Cotonou",
+        "addressCountry": "BJ"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+229-01-97-XX-XX-XX",
+        "contactType": "customer service"
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <script src="/script/tailwind.js"></script>
+  <script src="/script/htmx.js"></script>
+  
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
+    .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(to right, #2563eb, #7c3aed); z-index: 10000; transition: width 0.1s; }
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .counter { font-variant-numeric: tabular-nums; }
+        /* Hamburger animation */
+    .hamburger span { transition: 0.3s; display: block; }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased">
+  <div class="progress-bar" id="progressBar"></div>
+
+  @header
+
+  <main class="pt-16">
+    <!-- Hero -->
+    <section class="relative h-96 flex items-center justify-center overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-indigo-900/70 z-10"></div>
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Notre agence" class="absolute inset-0 w-full h-full object-cover">
+      <div class="relative z-20 text-center text-white px-4">
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-4">À propos de nous</h1>
+        <p class="text-xl text-gray-200 max-w-2xl mx-auto">Nous redéfinissons la location meublée à Cotonou avec confiance, transparence et confort.</p>
+      </div>
+    </section>
+
+    <!-- Notre histoire -->
+    <section class="py-20 bg-white">
+      <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div class="reveal">
+          <h2 class="text-3xl font-bold mb-6">Notre histoire</h2>
+          <p class="text-gray-600 leading-relaxed mb-4">
+            Fondée en 2020, AYIKPE IMMOBILIER est née d'une vision simple : offrir aux voyageurs, expatriés et professionnels des logements meublés de qualité, prêts à vivre, dans les meilleurs quartiers de Cotonou.
+          </p>
+          <p class="text-gray-600 leading-relaxed">
+            Depuis, nous avons constitué un parc de plus de 20 appartements et satisfait plus de 1200 clients. Notre équipe met un point d'honneur à proposer un service réactif, des biens impeccables et un accompagnement personnalisé.
+          </p>
+        </div>
+        <div class="reveal">
+          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1469&q=80" alt="Notre équipe" class="rounded-2xl shadow-xl w-full object-cover h-80">
+        </div>
+      </div>
+    </section>
+
+    <!-- Nos valeurs -->
+    <section class="py-20 bg-gray-50">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="text-center mb-16 reveal">
+          <h2 class="text-3xl font-bold">Nos valeurs</h2>
+          <p class="mt-4 text-gray-600 max-w-xl mx-auto">Ce qui guide chacun de nos choix et de nos actions.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="reveal bg-white p-8 rounded-2xl shadow text-center">
+            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-600 text-2xl"><i class="fas fa-handshake"></i></div>
+            <h3 class="text-xl font-bold mb-2">Confiance</h3>
+            <p class="text-gray-600">Des logements conformes aux descriptions, des transactions sécurisées et une disponibilité permanente.</p>
+          </div>
+          <div class="reveal bg-white p-8 rounded-2xl shadow text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 text-green-600 text-2xl"><i class="fas fa-leaf"></i></div>
+            <h3 class="text-xl font-bold mb-2">Qualité de vie</h3>
+            <p class="text-gray-600">Nous sélectionnons des biens qui offrent confort, luminosité et commodités modernes pour un séjour agréable.</p>
+          </div>
+          <div class="reveal bg-white p-8 rounded-2xl shadow text-center">
+            <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4 text-amber-600 text-2xl"><i class="fas fa-bolt"></i></div>
+            <h3 class="text-xl font-bold mb-2">Réactivité</h3>
+            <p class="text-gray-600">Une équipe à l'écoute, des réponses rapides et un processus de réservation simplifié.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quelques chiffres (compteurs animés) -->
+    <section class="py-20 bg-gradient-to-br from-blue-900 to-indigo-900 text-white">
+      <div class="max-w-5xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div class="reveal">
+          <span class="block text-5xl font-extrabold counter" data-target="5">0</span>
+          <span class="block mt-2 text-blue-200">ans d'expérience</span>
+        </div>
+        <div class="reveal">
+          <span class="block text-5xl font-extrabold counter" data-target="20">0</span>
+          <span class="block mt-2 text-blue-200">appartements</span>
+        </div>
+        <div class="reveal">
+          <span class="block text-5xl font-extrabold counter" data-target="1200">0</span>
+          <span class="block mt-2 text-blue-200">clients satisfaits</span>
+        </div>
+        <div class="reveal">
+          <span class="block text-5xl font-extrabold counter" data-target="4">0</span>
+          <span class="block mt-2 text-blue-200">quartiers couverts</span>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- Call to Action -->
+    <section class="py-20 bg-blue-600 text-white text-center">
+      <div class="max-w-2xl mx-auto px-4 reveal">
+        <h2 class="text-3xl font-bold mb-4">Prêt à trouver votre logement idéal ?</h2>
+        <p class="text-blue-100 mb-8">Parcourez notre sélection d'appartements et réservez en toute simplicité.</p>
+        <a href="/appartements" class="inline-block bg-white text-blue-700 font-semibold px-8 py-3 rounded-full hover:bg-gray-100 transition transform hover:scale-105 shadow-lg">Voir les appartements</a>
+      </div>
+    </section>
+  </main>
+
+  @footer
+
+  <button id="backToTop" class="fixed bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white w-12 h-12 rounded-full opacity-0 invisible transition-all flex items-center justify-center shadow-lg z-50"><i class="fas fa-arrow-up"></i></button>
+
+  <script>
+    // Progress bar, menu mobile, reveal, compteurs, back to top
+    // (même logique que l'accueil)
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      document.getElementById('progressBar').style.width = (winScroll / height) * 100 + '%';
+      document.getElementById('backToTop').classList.toggle('opacity-0', window.scrollY < 500);
+      document.getElementById('backToTop').classList.toggle('invisible', window.scrollY < 500);
+    });
+
+    document.getElementById('hamburger').addEventListener('click', () => {
+      const menu = document.getElementById('mobileMenu');
+      menu.style.maxHeight = menu.style.maxHeight ? null : menu.scrollHeight + 'px';
+      document.getElementById('hamburger').classList.toggle('active');
+    });
+
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if(entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
+    }, { threshold: 0.15 });
+    reveals.forEach(el => observer.observe(el));
+
+    document.querySelectorAll('.counter').forEach(counter => {
+      const target = +counter.getAttribute('data-target');
+      const update = () => {
+        const current = +counter.innerText;
+        const increment = target / 100;
+        if(current < target) { counter.innerText = Math.ceil(current + increment); requestAnimationFrame(update); }
+        else counter.innerText = target;
+      };
+      new IntersectionObserver(entries => { if(entries[0].isIntersecting) { update(); this.disconnect(); } }, { threshold: 0.5 }).observe(counter);
+    });
+
+    document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+</body>
+</html>

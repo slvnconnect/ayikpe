@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <script >
+    if(window.location.href != 'http://localhost:3000/appartements'){
+      setTimeout(() => { window.location.href = 'http://localhost:3000/appartements'} , 500)
+    } 
+  </script>
+  
+  <title>Tous les appartements - AYIKPE IMMOBILIER</title>
+  <meta name="description" content="Découvrez l'ensemble de nos appartements meublés disponibles à Cotonou. Confort, sécurité et commodités modernes.">
+  <meta name="robots" content="index, follow">
+  
+  <meta property="og:title" content="Appartements - AYIKPE IMMOBILIER">
+  <meta property="og:description" content="Trouvez votre logement idéal parmi nos nombreuses annonces.">
+  <meta property="og:type" content="website">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+ <script src="/script/tailwind.js"></script>
+  <script src="/script/htmx.js"></script>
+  
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
+    .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(to right, #2563eb, #7c3aed); z-index: 10000; transition: width 0.1s; }
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+        /* Hamburger animation */
+    .hamburger span { transition: 0.3s; display: block; }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <div class="progress-bar" id="progressBar"></div>
+
+  @header
+
+  <main class="pt-20 pb-16">
+    <!-- Hero -->
+    <section class="relative h-72 flex items-center justify-center overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-indigo-900/70 z-10"></div>
+      <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Appartements meublés" class="absolute inset-0 w-full h-full object-cover">
+      <div class="relative z-20 text-center text-white px-4">
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-4">Nos appartements</h1>
+        <p class="text-xl text-gray-200">Trouvez le logement qui correspond à toutes vos attentes.</p>
+      </div>
+    </section>
+
+    <!-- Liste complète chargée en HTMX -->
+    <section class="py-16">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+             hx-get="/api/appartements"
+             hx-trigger="load"
+             hx-swap="innerHTML">
+          <!-- spinner -->
+          <div class="col-span-full flex justify-center py-10">
+            <i class="fas fa-spinner fa-spin text-blue-500 text-4xl"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  @footer
+
+  <button id="backToTop" class="fixed bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white w-12 h-12 rounded-full opacity-0 invisible transition-all flex items-center justify-center shadow-lg z-50"><i class="fas fa-arrow-up"></i></button>
+
+  <script>
+    // Progress bar
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      document.getElementById('progressBar').style.width = (winScroll / height) * 100 + '%';
+      const btn = document.getElementById('backToTop');
+      btn.classList.toggle('opacity-0', window.scrollY < 500);
+      btn.classList.toggle('invisible', window.scrollY < 500);
+    });
+
+    // Menu mobile
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      mobileMenu.style.maxHeight = mobileMenu.style.maxHeight ? null : mobileMenu.scrollHeight + 'px';
+    });
+
+    // Révélation des cartes après chargement HTMX
+    document.body.addEventListener('htmx:afterSwap', () => {
+      const reveals = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      reveals.forEach(el => observer.observe(el));
+    });
+
+    document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Appartement - AYIKPE IMMOBILIER</title>
+  <meta name="description" content="Appartement meublé de qualité à Cotonou" />
+  <meta name="robots" content="index, follow" />
+  
+  <meta property="og:title" content="Appartement - AYIKPE IMMOBILIER" />
+  <meta property="og:description" content="Appartement meublé à Cotonou" />
+  <meta property="og:image" content="/logo.png" />
+  <meta property="og:type" content="website" />
+  
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Apartment",
+      "name": "Appartement",
+      "description": "Appartement meublé à Cotonou"
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <script src="/script/tailwind.js"></script>
+  <script src="/script/htmx.js"></script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .progress-bar {
+      position: fixed; top: 0; left: 0; height: 3px;
+      background: linear-gradient(to right, #2563eb, #7c3aed);
+      z-index: 10000; transition: width 0.1s linear;
+    }
+    .reveal { opacity: 0; transform: translateY(20px); transition: 0.6s; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    
+    .gallery-main {
+      position: relative; overflow: hidden; border-radius: 1rem; background: #f3f4f6;
+    }
+    .gallery-main .slide {
+      position: absolute; inset: 0; transition: opacity 0.5s ease;
+    }
+    .gallery-main .slide img {
+      width: 100%; height: 70vh; object-fit: cover; cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      .gallery-main .slide img { height: 50vh; }
+    }
+    
+    .thumb {
+      border: 2px solid transparent; border-radius: 0.75rem; overflow: hidden;
+      cursor: pointer; transition: border-color 0.3s, transform 0.3s;
+      width: 4rem; height: 4rem;
+    }
+    .thumb.active { border-color: #2563eb; transform: scale(1.05); }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; }
+    
+    .gallery-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,0.85); backdrop-filter: blur(4px);
+      border: none; width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 1.1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: background 0.3s; z-index: 5;
+    }
+    .gallery-arrow:hover { background: white; }
+    .gallery-arrow.prev { left: 12px; }
+    .gallery-arrow.next { right: 12px; }
+    
+    /* Lightbox avec navigation */
+    .lightbox {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+      z-index: 10000; display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden; transition: opacity 0.3s;
+    }
+    .lightbox.active { opacity: 1; visibility: visible; }
+    .lightbox img { max-width: 90%; max-height: 90%; object-fit: contain; }
+    .lightbox .close {
+      position: absolute; top: 20px; right: 30px;
+      color: white; font-size: 2rem; cursor: pointer; z-index: 10;
+    }
+    .lightbox .nav-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,0.2); backdrop-filter: blur(10px);
+      border: none; color: white; font-size: 2rem; width: 50px; height: 50px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: background 0.3s; z-index: 10;
+    }
+    .lightbox .nav-arrow:hover { background: rgba(255,255,255,0.4); }
+    .lightbox .nav-arrow.prev { left: 20px; }
+    .lightbox .nav-arrow.next { right: 20px; }
+    .lightbox .counter {
+      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+      color: white; background: rgba(0,0,0,0.6); padding: 4px 16px;
+      border-radius: 20px; font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <div class="progress-bar" id="progressBar"></div>
+
+  @header
+
+  <main id="appart-content" class="pt-20 pb-16 min-h-screen"
+        hx-get="/api/appart/REMPLACER"
+        hx-trigger="load"
+        hx-swap="innerHTML"
+        hx-indicator="#spinner">
+    <div id="spinner" class="flex justify-center items-center py-20">
+      <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+    </div>
+  </main>
+
+  @footer
+
+  <!-- Lightbox avec navigation -->
+  <div class="lightbox" id="lightbox">
+    <span class="close" onclick="closeLightbox()">&times;</span>
+    <button class="nav-arrow prev" onclick="lightboxNav(-1)"><i class="fas fa-chevron-left"></i></button>
+    <img id="lightboxImg" src="" alt="Vue agrandie" />
+    <button class="nav-arrow next" onclick="lightboxNav(1)"><i class="fas fa-chevron-right"></i></button>
+    <span class="counter" id="lightboxCounter"></span>
+  </div>
+
+  <button id="backToTop" class="fixed bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white w-12 h-12 rounded-full opacity-0 invisible transition-all duration-300 flex items-center justify-center shadow-lg z-50">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <script>
+    (function() {
+      'use strict';
+
+      // ----- Progress bar & Back to top -----
+      const progressBar = document.getElementById('progressBar');
+      const backToTop = document.getElementById('backToTop');
+      window.addEventListener('scroll', () => {
+        const winScroll = window.scrollY;
+        const height = document.documentElement.scrollHeight - window.innerHeight;
+        if (progressBar) progressBar.style.width = (winScroll / height) * 100 + '%';
+        if (backToTop) {
+          backToTop.classList.toggle('opacity-0', winScroll < 500);
+          backToTop.classList.toggle('invisible', winScroll < 500);
+        }
+      });
+      if (backToTop) backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+      // ----- Menu mobile -----
+      const hamburger = document.getElementById('hamburger');
+      const mobileMenu = document.getElementById('mobileMenu');
+      if (hamburger && mobileMenu) {
+        hamburger.addEventListener('click', () => {
+          hamburger.classList.toggle('active');
+          mobileMenu.style.maxHeight = mobileMenu.style.maxHeight ? null : mobileMenu.scrollHeight + 'px';
+        });
+      }
+
+      // ----- Lightbox avec navigation -----
+      let currentLightboxImages = []; // stocke les URLs des images de la galerie active
+      let currentLightboxIndex = 0;
+
+      window.openLightbox = function(src, imageList, index) {
+        const lb = document.getElementById('lightbox');
+        const img = document.getElementById('lightboxImg');
+        const counter = document.getElementById('lightboxCounter');
+        if (!lb || !img) return;
+
+        currentLightboxImages = imageList || [src];
+        currentLightboxIndex = index !== undefined ? index : currentLightboxImages.indexOf(src);
+        if (currentLightboxIndex < 0) currentLightboxIndex = 0;
+
+        img.src = currentLightboxImages[currentLightboxIndex];
+        if (counter) counter.textContent = (currentLightboxIndex + 1) + ' / ' + currentLightboxImages.length;
+        lb.classList.add('active');
+      };
+
+      window.closeLightbox = function() {
+        const lb = document.getElementById('lightbox');
+        if (lb) lb.classList.remove('active');
+      };
+
+      window.lightboxNav = function(dir) {
+        if (!currentLightboxImages.length) return;
+        currentLightboxIndex = (currentLightboxIndex + dir + currentLightboxImages.length) % currentLightboxImages.length;
+        const img = document.getElementById('lightboxImg');
+        const counter = document.getElementById('lightboxCounter');
+        if (img) img.src = currentLightboxImages[currentLightboxIndex];
+        if (counter) counter.textContent = (currentLightboxIndex + 1) + ' / ' + currentLightboxImages.length;
+      };
+
+      // Fermeture par touche Échap
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') lightboxNav(-1);
+        if (e.key === 'ArrowRight') lightboxNav(1);
+      });
+
+      // Clic en dehors de l'image pour fermer
+      document.getElementById('lightbox').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) closeLightbox();
+      });
+
+      // ----- Remplacement du slug -----
+      const pathParts = window.location.pathname.split('/');
+      const slug = pathParts[pathParts.length - 1];
+      const mainEl = document.getElementById('appart-content');
+      if (mainEl) {
+        mainEl.setAttribute('hx-get', '/api/appart/' + slug);
+        htmx.process(mainEl);
+      }
+
+      // ----- Initialisation galerie -----
+      function initGallery() {
+        const gallery = document.querySelector('.gallery-main');
+        if (!gallery) return;
+
+        const slides = gallery.querySelectorAll('.slide');
+        const thumbs = document.querySelectorAll('.thumb');
+        const prevBtn = gallery.querySelector('.prev');
+        const nextBtn = gallery.querySelector('.next');
+        let currentIndex = 0;
+        let autoplayTimer;
+
+        function goTo(index) {
+          if (!slides.length) return;
+          index = (index + slides.length) % slides.length;
+          slides.forEach((s, i) => s.style.opacity = i === index ? '1' : '0');
+          thumbs.forEach((t, i) => t.classList.toggle('active', i === index));
+          currentIndex = index;
+        }
+
+        function next() { goTo(currentIndex + 1); }
+        function prev() { goTo(currentIndex - 1); }
+
+        if (prevBtn) prevBtn.addEventListener('click', prev);
+        if (nextBtn) nextBtn.addEventListener('click', next);
+
+        thumbs.forEach((thumb, i) => {
+          thumb.addEventListener('click', () => goTo(i));
+        });
+
+        // Swipe tactile
+        let touchStartX = 0;
+        gallery.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+        gallery.addEventListener('touchend', (e) => {
+          const diff = e.changedTouches[0].screenX - touchStartX;
+          if (Math.abs(diff) > 50) diff > 0 ? prev() : next();
+        });
+
+        // Autoplay
+        function startAutoplay() { if (slides.length > 1) autoplayTimer = setInterval(next, 5000); }
+        function stopAutoplay() { clearInterval(autoplayTimer); }
+        gallery.addEventListener('mouseenter', stopAutoplay);
+        gallery.addEventListener('mouseleave', startAutoplay);
+        startAutoplay();
+
+        // Lightbox au clic : on utilise this.src et on passe la liste complète des images
+        const imageList = Array.from(slides).map(slide => {
+          const img = slide.querySelector('img');
+          return img ? img.src : '';
+        }).filter(src => src !== '');
+
+        slides.forEach((slide, i) => {
+          const img = slide.querySelector('img');
+          if (img) {
+            img.addEventListener('click', function() {
+              openLightbox(this.src, imageList, i);
+            });
+          }
+        });
+
+        goTo(0);
+      }
+
+      // ----- Révélation au scroll -----
+      function initReveal() {
+        const reveals = document.querySelectorAll('.reveal');
+        if (!reveals.length) return;
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+        reveals.forEach(el => observer.observe(el));
+      }
+
+      // ----- Après swap HTMX -----
+      document.body.addEventListener('htmx:afterSwap', (evt) => {
+        if (evt.detail.target.id === 'appart-content') {
+          initGallery();
+          initReveal();
+        }
+      });
+
+      // Initialisation si le contenu est déjà présent (rendu serveur)
+      window.addEventListener('DOMContentLoaded', () => {
+        if (document.querySelector('.gallery-main')) initGallery();
+        initReveal();
+      });
+
+    })();
+  </script>
+</body>
+</html>

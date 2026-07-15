@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <script >
+    if(window.location.href != 'http://localhost:3000/'){
+      setTimeout(() => { window.location.href = 'http://localhost:3000/'} , 500)
+    } 
+  </script>
+  
+  <!-- SEO Meta -->
+  <title>AYIKPE IMMOBILIER - Location d'appartements meublés de luxe à Cotonou</title>
+  <meta name="description" content="AYIKPE IMMOBILIER propose des appartements meublés modernes, sécurisés et confortables à Cotonou. Wi-Fi, climatisation, parking. Réservation rapide.">
+  <meta name="keywords" content="appartement meublé Cotonou, location meublée Cotonou, logement Cotonou, AYIKPE IMMOBILIER, appartement sécurisé Cotonou">
+  <meta name="author" content="AYIKPE IMMOBILIER">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="AYIKPE IMMOBILIER - Appartements meublés de standing à Cotonou">
+  <meta property="og:description" content="Trouvez votre logement idéal en quelques clics. Confort, sécurité et tranquillité garantis.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.ayikpeimmobilier.com/">
+  <meta property="og:image" content="https://www.ayikpeimmobilier.com/image/og-image.jpg">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AYIKPE IMMOBILIER">
+  <meta name="twitter:description" content="Location d'appartements meublés à Cotonou.">
+  <meta name="twitter:image" content="https://www.ayikpeimmobilier.com/image/twitter-image.jpg">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "RealEstateAgent",
+      "name": "AYIKPE IMMOBILIER",
+      "description": "Location d'appartements meublés à Cotonou",
+      "telephone": "+229 01 97 XX XX XX",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Cotonou",
+        "addressCountry": "BJ",
+        "postOfficeBoxNumber": "P.O BOX 2470"
+      },
+      "image": "https://www.ayikpeimmobilier.com/logo.png"
+    }
+  </script>
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  
+  <!-- Tailwind + HTMX -->
+  <script src="/script/tailwind.js"></script>
+  <script src="/script/htmx.js"></script>
+  
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    
+    /* Progress bar */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(to right, #2563eb, #7c3aed);
+      z-index: 10000;
+      transition: width 0.1s linear;
+    }
+    
+    /* Glass effect */
+    .glass {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    
+    /* Hamburger animation */
+    .hamburger span { transition: 0.3s; display: block; }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+    
+    /* Smooth reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    
+    /* Carousel dots (for later) */
+    .dot { transition: background-color 0.3s; }
+    
+    /* Counter animation */
+    .counter { font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased">
+  <!-- Progress Bar -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  @header
+
+  <main class="pt-16">
+    <!-- Hero Section (Parallax effect via CSS) -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-blue-900/70 via-blue-800/60 to-indigo-900/70 z-10"></div>
+      <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+           alt="Appartement meublé luxueux - AYIKPE IMMOBILIER" 
+           class="absolute inset-0 w-full h-full object-cover animate-ken-burns">
+      <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-4">
+          Trouvez votre <span class="bg-gradient-to-r from-amber-300 to-yellow-400 bg-clip-text text-transparent">logement idéal</span> à Cotonou
+        </h1>
+        <p class="text-lg md:text-xl text-gray-200 mb-8 max-w-3xl mx-auto">
+          Des appartements meublés premium avec Wi‑Fi, climatisation, sécurité 24/7 et emplacement stratégique. Votre confort, notre priorité.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#appartements" class="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-full font-semibold transition transform hover:scale-105 shadow-xl">
+            Voir nos offres
+          </a>
+          <a href="/contact" class="px-8 py-4 bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-full font-semibold transition transform hover:scale-105 border border-white/40">
+            Nous contacter
+          </a>
+        </div>
+      </div>
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
+        <i class="fas fa-chevron-down text-white text-2xl"></i>
+      </div>
+    </section>
+
+    <!-- Avantages / Services -->
+    <section class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-16 reveal">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Pourquoi choisir nos appartements ?</h2>
+          <p class="mt-4 text-gray-600 max-w-2xl mx-auto">Nous sélectionnons des logements qui allient design, confort et sécurité pour une expérience de vie exceptionnelle.</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Card 1 -->
+          <div class="reveal bg-gray-50 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-transparent hover:border-blue-200">
+            <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 mb-6">
+              <i class="fas fa-wifi text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Wi‑Fi Haut Débit</h3>
+            <p class="text-gray-600">Connexion fibre optique pour un travail et des loisirs fluides.</p>
+          </div>
+          <!-- Card 2 -->
+          <div class="reveal bg-gray-50 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-transparent hover:border-orange-200">
+            <div class="w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center text-orange-600 mb-6">
+              <i class="fas fa-utensils text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Cuisine Équipée</h3>
+            <p class="text-gray-600">Électroménager moderne et ustensiles fournis.</p>
+          </div>
+          <!-- Card 3 -->
+          <div class="reveal bg-gray-50 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-transparent hover:border-green-200">
+            <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center text-green-600 mb-6">
+              <i class="fas fa-car text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Parking Sécurisé</h3>
+            <p class="text-gray-600">Emplacement dédié et vidéosurveillance.</p>
+          </div>
+          <!-- Card 4 -->
+          <div class="reveal bg-gray-50 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-transparent hover:border-purple-200">
+            <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600 mb-6">
+              <i class="fas fa-tv text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Smart TV Connectée</h3>
+            <p class="text-gray-600">Netflix, YouTube et plus directement sur grand écran.</p>
+          </div>
+          <!-- Card 5 -->
+          <div class="reveal bg-gray-50 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-transparent hover:border-red-200">
+            <div class="w-14 h-14 bg-red-100 rounded-xl flex items-center justify-center text-red-600 mb-6">
+              <i class="fas fa-shield-haltered text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Sécurité 24/7</h3>
+            <p class="text-gray-600">Gardien et système d'alarme pour votre tranquillité.</p>
+          </div>
+          <!-- Card 6 -->
+          <div class="reveal bg-gray-50 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-transparent hover:border-cyan-200">
+            <div class="w-14 h-14 bg-cyan-100 rounded-xl flex items-center justify-center text-cyan-600 mb-6">
+              <i class="fas fa-snowflake text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Climatisation</h3>
+            <p class="text-gray-600">Air conditionné dans toutes les pièces principales.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Compteurs statistiques animés -->
+    <section class="py-20 bg-gradient-to-br from-blue-900 to-indigo-900 text-white">
+      <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+        <div class="reveal">
+          <span class="block text-5xl font-extrabold counter" data-target="20">0</span>
+          <span class="block mt-2 text-xl text-blue-200">Appartements</span>
+        </div>
+        <div class="reveal">
+          <span class="block text-5xl font-extrabold counter" data-target="1200">0</span>
+          <span class="block mt-2 text-xl text-blue-200">Clients satisfaits</span>
+        </div>
+        <div class="reveal">
+          <span class="block text-5xl font-extrabold counter" data-target="24">0</span>
+          <span class="block mt-2 text-xl text-blue-200">Assistance 24/24</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Appartements en vedette (HTMX) -->
+    <section id="appartements" class="py-20 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-16 reveal">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Nos appartements disponibles</h2>
+          <p class="mt-4 text-gray-600 max-w-2xl mx-auto">Découvrez une sélection de logements adaptés à vos besoins, que ce soit pour un court ou long séjour.</p>
+        </div>
+        <!-- Conteneur chargé par HTMX -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" 
+             hx-get="/data" 
+             hx-trigger="load" 
+             hx-swap="innerHTML">
+          <div class="col-span-full text-center py-10">
+            <i class="fas fa-spinner fa-spin text-blue-500 text-4xl"></i>
+          </div>
+        </div>
+        <div class="text-center mt-12 reveal">
+          <a href="/appartements" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-full transition transform hover:scale-105 shadow-md">
+            Voir tous les appartements <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comment ça marche ? -->
+    <section class="py-20 bg-white">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="text-center mb-16 reveal">
+          <h2 class="text-3xl font-bold">Réservez en 3 étapes</h2>
+          <p class="mt-4 text-gray-600">Un processus simple et rapide pour trouver votre chez-vous.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="reveal text-center">
+            <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-600 text-2xl font-bold">1</div>
+            <h3 class="text-xl font-semibold">Choisissez votre appartement</h3>
+            <p class="text-gray-600 mt-2">Parcourez notre catalogue et sélectionnez le bien qui correspond à vos critères.</p>
+          </div>
+          <div class="reveal text-center">
+            <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-600 text-2xl font-bold">2</div>
+            <h3 class="text-xl font-semibold">Contactez-nous</h3>
+            <p class="text-gray-600 mt-2">Appelez ou envoyez un message pour vérifier la disponibilité et réserver.</p>
+          </div>
+          <div class="reveal text-center">
+            <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-600 text-2xl font-bold">3</div>
+            <h3 class="text-xl font-semibold">Emménagez !</h3>
+            <p class="text-gray-600 mt-2">Nous vous remettons les clés et vous profitez immédiatement de votre logement.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Témoignages -->
+    <section class="py-20 bg-gray-50">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="text-center mb-16 reveal">
+          <h2 class="text-3xl font-bold">Ce que disent nos clients</h2>
+          <p class="mt-4 text-gray-600">Ils nous font confiance pour leurs séjours à Cotonou.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="reveal bg-white rounded-2xl p-8 shadow-lg">
+            <div class="flex items-center mb-4">
+              <div class="text-yellow-400 flex">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+              </div>
+            </div>
+            <p class="text-gray-600 italic">"Un appartement impeccable, très bien situé. Le service client est réactif et professionnel. Je recommande !"</p>
+            <div class="mt-4 font-semibold">— Emmanuelle K.</div>
+          </div>
+          <div class="reveal bg-white rounded-2xl p-8 shadow-lg">
+            <div class="flex items-center mb-4">
+              <div class="text-yellow-400 flex">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+              </div>
+            </div>
+            <p class="text-gray-600 italic">"J'ai adoré la décoration moderne et la tranquillité des lieux. Je reviendrai sans hésiter."</p>
+            <div class="mt-4 font-semibold">— Jean‑Luc A.</div>
+          </div>
+          <div class="reveal bg-white rounded-2xl p-8 shadow-lg">
+            <div class="flex items-center mb-4">
+              <div class="text-yellow-400 flex">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+              </div>
+            </div>
+            <p class="text-gray-600 italic">"Très bonne expérience, appartement conforme aux photos. Parking sécurisé appréciable."</p>
+            <div class="mt-4 font-semibold">— Nadège T.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ (Accordéon) -->
+    <section class="py-20 bg-white">
+      <div class="max-w-3xl mx-auto px-4">
+        <div class="text-center mb-16 reveal">
+          <h2 class="text-3xl font-bold">Questions fréquentes</h2>
+        </div>
+        <div class="space-y-4">
+          <div class="faq-item border rounded-xl overflow-hidden">
+            <button class="faq-toggle w-full flex justify-between items-center px-6 py-4 bg-gray-50 hover:bg-gray-100 transition font-medium text-left">
+              <span>Quels sont les modes de paiement acceptés ?</span>
+              <i class="fas fa-chevron-down transform transition-transform duration-300"></i>
+            </button>
+            <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+              <div class="px-6 py-4 text-gray-600 bg-white">Nous acceptons le paiement en espèces, par virement bancaire ou Mobile Money (MTN, Moov).</div>
+            </div>
+          </div>
+          <div class="faq-item border rounded-xl overflow-hidden">
+            <button class="faq-toggle w-full flex justify-between items-center px-6 py-4 bg-gray-50 hover:bg-gray-100 transition font-medium text-left">
+              <span>Puis-je visiter l’appartement avant de réserver ?</span>
+              <i class="fas fa-chevron-down transform transition-transform duration-300"></i>
+            </button>
+            <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+              <div class="px-6 py-4 text-gray-600 bg-white">Oui, nous organisons des visites sur rendez-vous. Contactez-nous pour planifier un créneau.</div>
+            </div>
+          </div>
+          <div class="faq-item border rounded-xl overflow-hidden">
+            <button class="faq-toggle w-full flex justify-between items-center px-6 py-4 bg-gray-50 hover:bg-gray-100 transition font-medium text-left">
+              <span>Les animaux domestiques sont-ils acceptés ?</span>
+              <i class="fas fa-chevron-down transform transition-transform duration-300"></i>
+            </button>
+            <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+              <div class="px-6 py-4 text-gray-600 bg-white">Cela dépend de chaque résidence. Veuillez vérifier les conditions spécifiques de l'appartement ou nous consulter.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    @newsletter
+  </main>
+
+  @footer
+
+  <!-- Back to top button -->
+  <button id="backToTop" class="fixed bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white w-12 h-12 rounded-full shadow-lg opacity-0 invisible transition-all duration-300 z-50 flex items-center justify-center">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <script>
+    // Progress bar
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progressBar').style.width = scrolled + '%';
+    });
+
+    // Mobile menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      if (mobileMenu.style.maxHeight) {
+        mobileMenu.style.maxHeight = null;
+      } else {
+        mobileMenu.style.maxHeight = mobileMenu.scrollHeight + 'px';
+      }
+    });
+
+    // Reveal on scroll
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // Counter animation
+    function animateCounters() {
+      const counters = document.querySelectorAll('.counter');
+      counters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        const updateCount = () => {
+          const current = +counter.innerText;
+          const increment = target / 100;
+          if (current < target) {
+            counter.innerText = Math.ceil(current + increment);
+            requestAnimationFrame(updateCount);
+          } else {
+            counter.innerText = target;
+          }
+        };
+        // Start when visible
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              updateCount();
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.5 });
+        observer.observe(counter);
+      });
+    }
+    animateCounters();
+
+    // FAQ Accordion
+    document.querySelectorAll('.faq-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const content = btn.nextElementSibling;
+        const icon = btn.querySelector('i');
+        const isOpen = content.style.maxHeight;
+        // Close all others
+        document.querySelectorAll('.faq-content').forEach(c => c.style.maxHeight = null);
+        document.querySelectorAll('.faq-toggle i').forEach(i => i.style.transform = 'rotate(0deg)');
+        if (!isOpen) {
+          content.style.maxHeight = content.scrollHeight + 'px';
+          icon.style.transform = 'rotate(180deg)';
+        }
+      });
+    });
+
+    // Back to top
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 500) {
+        backToTop.classList.remove('opacity-0', 'invisible');
+      } else {
+        backToTop.classList.add('opacity-0', 'invisible');
+      }
+    });
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Re-observe after HTMX swap
+    document.body.addEventListener('htmx:afterSwap', () => {
+      revealElements.forEach(el => revealObserver.observe(el));
+      animateCounters();
+    });
+
+document.body.addEventListener('htmx:afterSwap', () => {
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
+    revealObserver.observe(el);
+  });
+});
+  </script>
+
+
+  <!-- Légère animation Ken Burns pour le hero -->
+  <style>
+    @keyframes kenBurns {
+      0% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    .animate-ken-burns {
+      animation: kenBurns 20s ease alternate infinite;
+    }
+  </style>
+</body>
+</html>

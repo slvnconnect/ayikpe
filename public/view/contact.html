@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <script >
+    if(window.location.href != 'http://localhost:3000/contact'){
+      setTimeout(() => { window.location.href = 'http://localhost:3000/contact'} , 500)
+    } 
+  </script>
+  
+  <!-- SEO -->
+  <title>Contact - AYIKPE IMMOBILIER | Location d'appartements meublés à Cotonou</title>
+  <meta name="description" content="Contactez AYIKPE IMMOBILIER pour toute demande de location d'appartement meublé à Cotonou. Téléphone, email, formulaire.">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Contact - AYIKPE IMMOBILIER">
+  <meta property="og:description" content="Nous sommes à votre écoute pour toute question ou réservation.">
+  <meta property="og:type" content="website">
+  
+  <!-- Schema.org ContactPage -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ContactPage",
+      "name": "Contact AYIKPE IMMOBILIER",
+      "description": "Page de contact de l'agence AYIKPE IMMOBILIER",
+      "mainEntity": {
+        "@type": "Organization",
+        "name": "AYIKPE IMMOBILIER",
+        "telephone": "+229-01-97-XX-XX-XX",
+        "email": "xxxx@gmail.com"
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+   <script src="/script/tailwind.js"></script>
+  <script src="/script/htmx.js"></script>
+  
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
+    .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(to right, #2563eb, #7c3aed); z-index: 10000; transition: width 0.1s; }
+    .reveal { opacity: 0; transform: translateY(20px); transition: 0.6s; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    input, textarea { transition: border-color 0.3s, box-shadow 0.3s; }
+    input:focus, textarea:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.2); }
+    /* Hamburger animation */
+    .hamburger span { transition: 0.3s; display: block; }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <div class="progress-bar" id="progressBar"></div>
+
+  @header
+
+  <main class="pt-16">
+    <!-- Hero -->
+    <section class="relative h-80 flex items-center justify-center overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-indigo-900/70 z-10"></div>
+      <img src="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Contactez-nous" class="absolute inset-0 w-full h-full object-cover">
+      <div class="relative z-20 text-center text-white px-4">
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-4">Contactez-nous</h1>
+        <p class="text-xl text-gray-200">Nous sommes là pour répondre à toutes vos questions.</p>
+      </div>
+    </section>
+
+    <!-- Formulaire + infos -->
+    <section class="py-20 bg-white">
+      <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <!-- Formulaire -->
+        <div class="reveal">
+          <h2 class="text-3xl font-bold mb-8">Envoyez-nous un message</h2>
+          <form id="contactForm" class="space-y-6" onsubmit="handleSubmit(event)">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Nom complet *</label>
+              <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-50 focus:bg-white" placeholder="Votre nom">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Téléphone</label>
+              <input type="tel" class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-50 focus:bg-white" placeholder="+229 01 XX XX XX XX">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Message *</label>
+              <textarea rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-50 focus:bg-white" placeholder="Votre message..."></textarea>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition transform hover:scale-[1.02] shadow-md">
+              <i class="fas fa-paper-plane mr-2"></i> Envoyer le message
+            </button>
+            <p id="formFeedback" class="text-green-600 text-center hidden">Message envoyé avec succès ! Nous vous répondrons rapidement.</p>
+          </form>
+        </div>
+
+        <!-- Infos de contact -->
+        <div class="reveal space-y-8">
+          <h2 class="text-3xl font-bold mb-8">Nos coordonnées</h2>
+          <div class="space-y-6">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600"><i class="fas fa-phone-alt text-xl"></i></div>
+              <div>
+                <h3 class="font-semibold">Téléphone</h3>
+                <p class="text-gray-600">+229 01 97 XX XX XX</p>
+                <p class="text-sm text-gray-400">Lun-Ven 8h-18h, Sam 9h-13h</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-green-600"><i class="fas fa-envelope text-xl"></i></div>
+              <div>
+                <h3 class="font-semibold">Email</h3>
+                <p class="text-gray-600">xxxx@gmail.com</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center text-amber-600"><i class="fas fa-map-marker-alt text-xl"></i></div>
+              <div>
+                <h3 class="font-semibold">Adresse</h3>
+                <p class="text-gray-600">P.O BOX Cotonou 2470, Bénin</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600"><i class="fas fa-clock text-xl"></i></div>
+              <div>
+                <h3 class="font-semibold">Horaires</h3>
+                <p class="text-gray-600">Lundi - Vendredi : 8h00 - 18h00</p>
+                <p class="text-gray-600">Samedi : 9h00 - 13h00</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ rapide contact -->
+    <section class="py-20 bg-white">
+      <div class="max-w-3xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12 reveal">Questions rapides</h2>
+        <div class="space-y-4">
+          <div class="faq-item border rounded-xl overflow-hidden">
+            <button class="faq-toggle w-full flex justify-between items-center px-6 py-4 bg-gray-50 hover:bg-gray-100 transition font-medium text-left">
+              <span>Comment puis-je réserver un appartement ?</span>
+              <i class="fas fa-chevron-down transform transition-transform duration-300"></i>
+            </button>
+            <div class="faq-content max-h-0 overflow-hidden transition-all duration-300">
+              <div class="px-6 py-4 text-gray-600 bg-white">Contactez-nous par téléphone, email ou via le formulaire ci-dessus. Nous vérifierons la disponibilité et vous guiderons pour finaliser votre réservation.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  @footer
+
+  <button id="backToTop" class="fixed bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white w-12 h-12 rounded-full opacity-0 invisible transition-all flex items-center justify-center shadow-lg z-50"><i class="fas fa-arrow-up"></i></button>
+
+  <script>
+    // Scripts communs (progress bar, menu mobile, reveal, back to top) + FAQ + formulaire
+    window.addEventListener('scroll', () => {
+      document.getElementById('progressBar').style.width = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100 + '%';
+      const btn = document.getElementById('backToTop');
+      btn.classList.toggle('opacity-0', window.scrollY < 500);
+      btn.classList.toggle('invisible', window.scrollY < 500);
+    });
+
+    document.getElementById('hamburger').addEventListener('click', () => {
+      const menu = document.getElementById('mobileMenu');
+      menu.style.maxHeight = menu.style.maxHeight ? null : menu.scrollHeight + 'px';
+      document.getElementById('hamburger').classList.toggle('active');
+    });
+
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if(entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    // FAQ accordéon
+    document.querySelectorAll('.faq-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const content = btn.nextElementSibling;
+        const icon = btn.querySelector('i');
+        document.querySelectorAll('.faq-content').forEach(c => c.style.maxHeight = null);
+        document.querySelectorAll('.faq-toggle i').forEach(i => i.style.transform = 'rotate(0deg)');
+        if (!content.style.maxHeight) {
+          content.style.maxHeight = content.scrollHeight + 'px';
+          icon.style.transform = 'rotate(180deg)';
+        }
+      });
+    });
+
+    // Formulaire
+    function handleSubmit(e) {
+  e.preventDefault();
+
+  const form = e.target;
+
+  const nom = form.querySelector('input[type="text"]').value;
+  const telephone = form.querySelector('input[type="tel"]').value;
+  const message = form.querySelector('textarea').value;
+
+  const texte = `
+Bonjour AYIKPE IMMOBILIER 👋
+
+Je m'appelle ${nom}.
+Mon numéro : ${telephone}
+
+Je vous contacte pour une demande concernant vos appartements.
+
+${message}
+
+Merci.
+  `;
+
+  const numeroWhatsApp = "22996451313";
+
+  window.open(
+    `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(texte)}`,
+    "_blank"
+  );
+
+  form.reset();
+}
+
+    document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+</body>
+</html>
